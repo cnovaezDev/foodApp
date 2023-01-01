@@ -1,16 +1,14 @@
 package cnovaez.dev.foodapp.presentation.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import cnovaez.dev.foodapp.R
 import cnovaez.dev.foodapp.databinding.FragmentLoginBinding
-import cnovaez.dev.foodapp.domain.User
+import cnovaez.dev.foodapp.domain.models.database.User
 import cnovaez.dev.foodapp.presentation.ui.viewmodels.LoginFragmentViewModel
 import cnovaez.dev.foodapp.utils.logError
 import cnovaez.dev.foodapp.utils.logInformation
@@ -117,7 +115,7 @@ class LoginFragment : Fragment() {
     private fun checkPasswordFieldsMatch(): Boolean {
         var error = false
         if (!binding.passwordLoginTiet.text.toString()
-                .equals(binding.passwordConfirmLoginTiet.text)
+                .equals(binding.passwordConfirmLoginTiet.text.toString())
         ) {
             binding.passwordLoginTil.error = "Passwords fields must match"
             binding.passwordConfirmLoginTil.error = "Passwords fields must match"

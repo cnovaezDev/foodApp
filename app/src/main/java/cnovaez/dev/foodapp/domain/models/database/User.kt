@@ -1,4 +1,4 @@
-package cnovaez.dev.foodapp.domain
+package cnovaez.dev.foodapp.domain.models.database
 
 /**
  ** Created by Carlos A. Novaez Guerrero on 29/12/2022 12:38

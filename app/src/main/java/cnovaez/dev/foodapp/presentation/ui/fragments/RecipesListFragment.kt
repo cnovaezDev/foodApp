@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import cnovaez.dev.foodapp.R
 import cnovaez.dev.foodapp.databinding.FragmentRecipesListBinding
+
 import cnovaez.dev.foodapp.presentation.ui.viewmodels.RecipeListFragmentViewModel
 import cnovaez.dev.foodapp.utils.navigate
 import com.google.firebase.auth.FirebaseAuth
@@ -32,7 +33,7 @@ class RecipesListFragment : Fragment() {
         binding.recipeViewModel = recipeListFragmentViewModel
         binding.lifecycleOwner = this
 
-        recipeListFragmentViewModel.logOutUser.observe(this) {
+        recipeListFragmentViewModel.logOutUser.observe(viewLifecycleOwner) {
             it?.let {
                 signOutUser()
             }
