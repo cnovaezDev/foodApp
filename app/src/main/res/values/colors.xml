@@ -16,4 +16,5 @@
     <color name="white_text_color">#f0f0f0</color>
     <color name="gray_color">#979797</color>
     <color name="red_color">#D32F2F</color>
+    <color name="gray_color_shimmer">#D6D6D6</color>
 </resources>

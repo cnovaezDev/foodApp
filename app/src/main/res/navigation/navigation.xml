@@ -16,6 +16,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_recipesListFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -26,5 +29,18 @@
             android:id="@+id/action_loginFragment_to_recipesListFragment"
             app:destination="@id/recipesListFragment"
             app:popUpTo="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="cnovaez.dev.foodapp.presentation.ui.fragments.RecipeDetailsFragment"
+        android:label="fragment_recipe_details"
+        tools:layout="@layout/fragment_recipe_details" >
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_recipesListFragment"
+            app:destination="@id/recipesListFragment" />
+        <argument
+            android:name="url"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

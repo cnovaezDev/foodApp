@@ -5,7 +5,7 @@ package cnovaez.dev.foodapp.utils
  ** cnovaez.dev@outlook.com
  **/
 object GlobalValues {
-   const val baseUrl = "https://api.edamam.com/api/recipes/v2"
+   const val baseUrl = "https://api.edamam.com"
    const val appId = "90127d44"
    const val appKey = "ff9af186a80d7e4ab0c905ded5c682cc"
 

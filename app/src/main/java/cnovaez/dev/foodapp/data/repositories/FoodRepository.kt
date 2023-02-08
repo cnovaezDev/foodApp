@@ -1,13 +1,10 @@
 package cnovaez.dev.foodapp.data.repositories
 
-import androidx.lifecycle.LiveData
 import cnovaez.dev.foodapp.data.network.RetrofitAPI
-import cnovaez.dev.foodapp.domain.models.network.Recipe
+import cnovaez.dev.foodapp.domain.models.network.RecipeBodyClass
 import cnovaez.dev.foodapp.utils.data_types.Mealtype
 import cnovaez.dev.foodapp.utils.logError
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 /**
@@ -15,16 +12,27 @@ import javax.inject.Inject
  ** cnovaez.dev@outlook.com
  **/
 
-class FoodRepository @Inject constructor(val retrofitAPI: RetrofitAPI) {
+class FoodRepository @Inject constructor(private val retrofitAPI: RetrofitAPI) {
 
 
-    private suspend fun getAllRecipesApi(recipe: Recipe): LiveData<List<Recipe>> {
-        return retrofitAPI.getAllRecipesThatMatchQuery(recipe.query)
+    private suspend fun getAllRecipesApi(recipeBodyClass: RecipeBodyClass): Response<*> {
+        return retrofitAPI.getAllRecipesThatMatchQuery(
+            recipeBodyClass.query,
+            recipeBodyClass.mealtype,
+            recipeBodyClass.cousineType
+        )
+
     }
+//    private suspend fun getAllRecipesApi2(recipeBodyClass: RecipeBodyClass): retrofit2.Response<*> {
+//        return retrofitAPI.getAllRecipesThatMatchQueryyyyy()
+//    }
 
-    suspend fun getRecipes(recipe: Recipe, forceUpdate: Boolean = false): LiveData<List<Recipe>>? {
+    suspend fun getRecipes(
+        recipeBodyClass: RecipeBodyClass,
+        forceUpdate: Boolean = false
+    ): Response<*>? {
         return try {
-            getAllRecipesApi(recipe)
+            getAllRecipesApi(recipeBodyClass)
             //Insertar en la base de datos
         } catch (ex: Exception) {
             ex.message?.let { logError(it) }
@@ -32,15 +40,24 @@ class FoodRepository @Inject constructor(val retrofitAPI: RetrofitAPI) {
         }
     }
 
-    suspend fun getRecipes(): LiveData<List<Recipe>>? {
+    suspend fun getRecipes(): Response<*>? {
         return try {
-            getAllRecipesApi(Recipe(mealtype = randomMealType()))
+            getAllRecipesApi(RecipeBodyClass(mealtype = randomMealType()))
             //Insertar en la base de datos
         } catch (ex: Exception) {
             ex.message?.let { logError(it) }
             null
         }
     }
+//    suspend fun getRecipes2(): retrofit2.Response<*>? {
+//        return try {
+//            getAllRecipesApi2(RecipeBodyClass(mealtype = randomMealType()))
+//            //Insertar en la base de datos
+//        } catch (ex: Exception) {
+//            ex.message?.let { logError(it) }
+//            null
+//        }
+//    }
 
     fun randomMealType() = Mealtype.values()[(Mealtype.values().indices).random()]
 }

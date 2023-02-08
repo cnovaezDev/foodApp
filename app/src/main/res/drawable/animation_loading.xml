@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-  
-</selector>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <animated-rotate
+            android:drawable="@drawable/loading_svg"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:fromDegrees="0"
+            android:toDegrees="360"
+            android:duration="50"
+            android:repeatCount="infinite" />
+    </item>
+</animated-selector>

@@ -6,16 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import cnovaez.dev.foodapp.R
 import cnovaez.dev.foodapp.databinding.FragmentRecipesListBinding
+import cnovaez.dev.foodapp.presentation.ui.adapters.RecipesAdapter
 
 import cnovaez.dev.foodapp.presentation.ui.viewmodels.RecipeListFragmentViewModel
 import cnovaez.dev.foodapp.utils.navigate
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RecipesListFragment : Fragment() {
     private lateinit var binding: FragmentRecipesListBinding
     private lateinit var auth: FirebaseAuth
@@ -38,7 +42,27 @@ class RecipesListFragment : Fragment() {
                 signOutUser()
             }
         }
+        val adapter = RecipesAdapter()
+        binding.recipesListRv.adapter = adapter
+
+        recipeListFragmentViewModel.recipes.observe(viewLifecycleOwner) { response ->
+            response?.let {res ->
+                adapter.submitList(res)
+                binding.shimmerViewContainer.visibility = View.GONE
+            }
+        }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+
+        //   val manager = LinearLayoutManager(activity, GridLayoutManager.VERTICAL, false)
+        //val manager = GridLayoutManager(activity, 1, GridLayoutManager.VERTICAL, false)
+        //val manager = GridLayoutManager(activity, 5, GridLayoutManager.HORIZONTAL, false)
+        // binding.sleepList.layoutManager = manager;
     }
 
     override fun onStart() {
@@ -49,6 +73,7 @@ class RecipesListFragment : Fragment() {
             this.navigate(RecipesListFragmentDirections.actionRecipesListFragmentToLoginFragment())
         }
     }
+
     fun signOutUser() {
         Firebase.auth.signOut()
         navigate(RecipesListFragmentDirections.actionRecipesListFragmentToLoginFragment())
